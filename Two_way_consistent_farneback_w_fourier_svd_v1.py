@@ -2,7 +2,9 @@
 """
 Created on Thu Aug 21 00:13:42 2025
 
-@author: ansis
+@main_dev: Ansis_Z
+@co_dev: Mihails_B
+
 """
 
 import os
@@ -18,7 +20,7 @@ from io import BytesIO
 from tifffile import imread
 from scipy.fft import fft, fftfreq
 import wolframclient.serializers as wxf
-from tqdm import tqdm   # <<< NEW
+from tqdm import tqdm  
 
 
 # ===============================
@@ -30,12 +32,12 @@ def numeric_sort_key(filename):
     return int(match.group()) if match else -1
 
 
-# ===============================
-# === STEP 1: SVD FILTERING ===
-# ===============================
+# =====================
+# === SVD FILTERING ===
+# =====================
 
 def svd_filter_images(image_folder, remove_modes=[0, 12, 14, 15, 18, 19, 26, 27, 39, 41, 46, 48, 53, 66, 89, 99], do_plots=True):
-    print("\n📂 Loading TIFF images...")
+    print("\n Loading TIFF images...")
     image_files = sorted([f for f in os.listdir(image_folder) if f.endswith('.tiff')],
                          key=numeric_sort_key)
     images = [imread(os.path.join(image_folder, f)) for f in tqdm(image_files, desc="Reading TIFFs")]
@@ -44,7 +46,7 @@ def svd_filter_images(image_folder, remove_modes=[0, 12, 14, 15, 18, 19, 26, 27,
     print("Loaded image stack shape:", volume.shape)
 
     # Flatten (T, H*W) for SVD
-    print("\n🔎 Performing SVD...")
+    print("\n Performing SVD...")
     X = volume.reshape(T, -1)
     U, S, Vt = np.linalg.svd(X, full_matrices=False)
 
@@ -76,7 +78,7 @@ def svd_filter_images(image_folder, remove_modes=[0, 12, 14, 15, 18, 19, 26, 27,
         plt.show()
 
     # Remove selected modes
-    print("\n🧹 Removing selected modes...")
+    print("\n Removing selected modes...")
     recon = np.zeros_like(X)
     for i in tqdm(remove_modes, desc="Removing modes"):
         recon += np.outer(U[:, i], S[i] * Vt[i, :])
@@ -89,9 +91,9 @@ def svd_filter_images(image_folder, remove_modes=[0, 12, 14, 15, 18, 19, 26, 27,
     return filtered_volume, image_files
 
 
-# ===============================
-# === STEP 2: OPTICAL FLOW ===
-# ===============================
+# ====================
+# === OPTICAL FLOW ===
+# ====================
 def normalize_frame(frame):
     frame = frame - np.min(frame)              # shift min to 0
     frame = frame / np.max(frame)              # scale to [0,1]
@@ -102,7 +104,7 @@ def run_optical_flow(images, image_files, output_folder_global, runID=1,
                      ArrowDensityStep=3, ConsistencyErrorThreshold=1,
                      VideoFPS=5):
 
-    print("\n🎥 Starting optical flow analysis...")
+    print("\n Starting optical flow analysis...")
 
     # Create output dirs
     output_folder = os.path.join(output_folder_global, os.path.basename("filtered_stack") + f"_run_{runID}")
@@ -221,12 +223,12 @@ def run_optical_flow(images, image_files, output_folder_global, runID=1,
 
     if video_writer:
         video_writer.release()
-    print(f"\n✅ Optical flow MP4 saved to: {video_path}")
+    print(f"\n Optical flow MP4 saved to: {video_path}")
 
 #%%
-# ===============================
+# =====================
 # === MAIN PIPELINE ===
-# ===============================
+# =====================
 
 if __name__ == "__main__":
     # Input/output folders
@@ -239,3 +241,4 @@ if __name__ == "__main__":
 
     # Step 2: Optical flow
     run_optical_flow(images, image_files, output_folder_global, runID=1)
+
