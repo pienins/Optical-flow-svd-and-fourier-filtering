@@ -30,13 +30,16 @@ from tqdm import tqdm
 # ===============================
 
 # Visualization parameters
-ArrowDensityStep = 3
+ArrowDensityStep = 10
+ArrowScale = 50 # This controls the arrow size *inversely*
 VideoFPS = 5
+VelocityInversion = -1 # Switch to -1 if the vector 
+                       # field arrows are inexplicably inverted
 
 # Optical flow parameters
-PyramidDownsampleFactor = 0.5
+PyramidDownsampleFactor = 0.75
 PyramidLevels = 8
-WindowSize = 10
+WindowSize = 25
 IterationCount = 5
 PolyFitKernelSize = 7
 GaussKernelStdev = 2
@@ -45,12 +48,11 @@ ConsistencyErrorThreshold = 1
 
 # SVD modes to remove
 KillIDs = [
-0, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 41, 42, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+    
     ]
 
 # Run ID (careful with output overwrites)
-runID = 7
-
+runID = 11
 
 #%%
 
@@ -171,9 +173,9 @@ def run_optical_flow(images, image_files, output_folder_global):
         # Sampled vectors
         y, x = np.mgrid[ArrowDensityStep//2:h:ArrowDensityStep,
                         ArrowDensityStep//2:w:ArrowDensityStep]
-        u_sampled = -1 * u[ArrowDensityStep//2:h:ArrowDensityStep,
+        u_sampled = VelocityInversion * u[ArrowDensityStep//2:h:ArrowDensityStep,
                            ArrowDensityStep//2:w:ArrowDensityStep]
-        v_sampled = -1 * v[ArrowDensityStep//2:h:ArrowDensityStep,
+        v_sampled = VelocityInversion * v[ArrowDensityStep//2:h:ArrowDensityStep,
                            ArrowDensityStep//2:w:ArrowDensityStep]
         reliability_sampled = reliability_mask[ArrowDensityStep//2:h:ArrowDensityStep,
                                                ArrowDensityStep//2:w:ArrowDensityStep]
@@ -201,7 +203,7 @@ def run_optical_flow(images, image_files, output_folder_global):
         # Plot and save frame
         fig, ax = plt.subplots(figsize=(6, 6), dpi=150)
         ax.imshow(prev_img, cmap='gray')
-        ax.quiver(x, y, u_sampled, v_sampled, color='lime', scale=50)
+        ax.quiver(x, y, u_sampled, v_sampled, color='lime', scale=ArrowScale)
         ax.set_title(f'Frame {i} → {i+1}')
         ax.axis('off')
         buf = BytesIO()
@@ -238,8 +240,8 @@ def run_optical_flow(images, image_files, output_folder_global):
 
 if __name__ == "__main__":
     # Input/output folders
-    image_folder = r"D:\Ansis Zivers\Optical Flow\Image_sequences\optical_density_3D_filtered_TV_Laplacian_consRel_1.15"
-    output_folder_global = r"D:\Ansis Zivers\Optical Flow\Output_2WFB_SVDF"
+    image_folder = r"D:\Science\NMI\MHD Project\Image Processing\Optical Flow\Image_sequences\test_solidification_filtered3D_corrected"
+    output_folder_global = r"D:\Science\NMI\MHD Project\Image Processing\Optical Flow\test_output_Kristofers"
     os.makedirs(output_folder_global, exist_ok=True)
     
     # Create output dirs

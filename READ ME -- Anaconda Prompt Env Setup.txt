@@ -1,0 +1,47 @@
+:: ------------------------------------------------------------
+:: CREATE clean environment
+:: ------------------------------------------------------------
+conda create -n flowenv python=3.10 -y
+conda activate flowenv
+
+:: ------------------------------------------------------------
+:: Install NUMPY FIRST (version compatible with OpenCV 4.5.5)
+:: ------------------------------------------------------------
+pip install numpy==1.26.4
+
+:: ------------------------------------------------------------
+:: Install OpenCV (the ONLY version that works reliably)
+:: Important: we use opencv-python-headless because video works
+:: and avoids DLL conflicts.
+:: ------------------------------------------------------------
+pip install opencv-python-headless==4.5.5.64 --no-deps
+
+:: ------------------------------------------------------------
+:: Verify OpenCV installation
+:: ------------------------------------------------------------
+python -c "import cv2; print('OpenCV version:', cv2.__version__)"
+
+:: ------------------------------------------------------------
+:: Install all other required packages
+:: ------------------------------------------------------------
+pip install imageio pandas matplotlib tifffile scipy tqdm wolframclient
+
+:: ------------------------------------------------------------
+:: Install Spyder into this env
+:: ------------------------------------------------------------
+pip install spyder
+
+:: ------------------------------------------------------------
+:: Verify Spyder can start from this environment
+:: ------------------------------------------------------------
+spyder --version
+
+:: ------------------------------------------------------------
+:: NOTE: this setup uses a different video encoder/format:
+:: ------------------------------------------------------------
+:: #video_path = os.path.join(output_folder, "velocity_field.mp4")
+:: video_path = os.path.join(output_folder, "velocity_field.avi")
+:: #fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+:: fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+:: ------------------------------------------------------------
+:: ------------------------------------------------------------
