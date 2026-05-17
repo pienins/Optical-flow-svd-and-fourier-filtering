@@ -3,35 +3,41 @@
 :: ------------------------------------------------------------
 conda create -n flowenv python=3.10 -y
 conda activate flowenv
+set PYTHONNOUSERSITE=1
+
+python -m ensurepip --upgrade
+python -m pip install --upgrade pip
 
 :: ------------------------------------------------------------
 :: Install NUMPY FIRST (version compatible with OpenCV 4.5.5)
 :: ------------------------------------------------------------
-pip install numpy==1.26.4
+python -m pip install numpy==1.26.4
 
 :: ------------------------------------------------------------
 :: Install OpenCV (the ONLY version that works reliably)
 :: Important: we use opencv-python-headless because video works
 :: and avoids DLL conflicts.
 :: ------------------------------------------------------------
-pip install opencv-python-headless==4.5.5.64 --no-deps
+python -m pip install opencv-python-headless==4.5.5.64 --no-deps
 
 :: ------------------------------------------------------------
 :: Verify OpenCV installation
 :: ------------------------------------------------------------
-python -c "import cv2; print('OpenCV version:', cv2.__version__)"
+python -c "import cv2; print('OpenCV version:', cv2.__version__); print(cv2.__file__)"
 
 :: ------------------------------------------------------------
 :: Install all other required packages
 :: ------------------------------------------------------------
-pip install imageio pandas matplotlib tifffile scipy tqdm wolframclient
+python -m pip install imageio pandas matplotlib tifffile scipy tqdm wolframclient
 
 :: ------------------------------------------------------------
 :: Install Spyder into this env
 :: ------------------------------------------------------------
-pip install spyder
+python -m pip install spyder
 
 :: ------------------------------------------------------------
 :: Verify Spyder can start from this environment
 :: ------------------------------------------------------------
-spyder --version
+python -c "import spyder; print(spyder.__version__)"
+python -c "import spyder_kernels; print(spyder_kernels.__version__)"
+
