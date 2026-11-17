@@ -63,7 +63,3 @@ For experimental processing, copy [`config.json`](config.json) and change `paths
 Existing source-repository historical `.7z` archives are **left in their original locations** (Git LFS). The additional [`results/examples/`](results/examples/) tree contains **selected excerpts** of two later uploaded 99-frame-pair output archives (uniform translation and Rankine vortex), plus a tiny newly generated uniform example. Neither later archive contains the corresponding original TIFF inputs or independent truth-map files, so the archived internal consistency/retention statistics are *not* independent ground-truth accuracy measurements. See [Missing materials](docs/missing_materials.md) and [Result registry](docs/results_registry.md).
 
 **Do not delete archived runs, compare unmatched configurations as a controlled experiment, or publish accuracy claims based only on the saved QC logs.** The uploaded historical Rankine configuration used `frame2_polynomial` warping, which is not exposed by the current modular solver.
-
-## Contributions, licensing and citations
-
-Before public release, add a repository license, authors/contributions, references to the published Farnebäck algorithm and relevant optical-flow/PIV benchmarking literature, and a citation file (e.g. `CITATION.cff`). Authorship and licensing decisions must be approved by the project contributors.
