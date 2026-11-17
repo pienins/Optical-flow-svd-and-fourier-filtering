@@ -1,0 +1,20 @@
+{
+  "uniform": {
+    "pairs": 99,
+    "median_retention_percent": 99.9658014431791,
+    "median_fb_error_px": 0.046632617712020874,
+    "median_scaled_MAD_px": 0.039688240110129114,
+    "pair0_median_u": 8.000556945800781,
+    "pair0_median_v": -20.000518798828125,
+    "pair0_retention_percent": 99.97948086590746
+  },
+  "rankine": {
+    "pairs": 99,
+    "median_retention_percent": 99.96795654296875,
+    "median_fb_error_px": 0.023329421877861023,
+    "median_scaled_MAD_px": 0.01536619073152542,
+    "pair0_median_u": -0.005790680181235075,
+    "pair0_median_v": 0.008453968912363052,
+    "pair0_retention_percent": 99.97100830078125
+  }
+}

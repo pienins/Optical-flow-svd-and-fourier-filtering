@@ -1,0 +1,6 @@
+level,width_px,height_px,scale_x,scale_y,polynomial_window_level_px,motion_window_level_px,polynomial_window_original_px_x,polynomial_window_original_px_y,motion_window_original_px_x,motion_window_original_px_y
+0,512,512,1.0,1.0,7,28,7.0,7.0,28.0,28.0
+1,256,256,0.5,0.5,7,28,14.0,14.0,56.0,56.0
+2,128,128,0.25,0.25,7,28,28.0,28.0,112.0,112.0
+3,64,64,0.125,0.125,7,28,56.0,56.0,224.0,224.0
+4,32,32,0.0625,0.0625,7,28,112.0,112.0,448.0,448.0

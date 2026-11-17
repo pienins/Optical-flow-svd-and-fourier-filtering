@@ -1,0 +1,14 @@
+[
+  {
+    "filename": "synthetic_uniform_u8_vm20_run_55.7z",
+    "sha256": "aa7da99dc6656466eb7e6554941af97c3f6acf07a2c35034e457934ef3fc2673",
+    "bytes": 87765348,
+    "run": "uniform"
+  },
+  {
+    "filename": "synthetic_rankine_R80_vb3_cx255p5_cy255p5_run_11.7z",
+    "sha256": "d8d9990ff7ce19e31025077851d9868d023efe227c6582a2dcc93a3f68b9b1c6",
+    "bytes": 189621444,
+    "run": "rankine"
+  }
+]

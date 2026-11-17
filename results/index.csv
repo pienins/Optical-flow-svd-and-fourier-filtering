@@ -1,0 +1,3 @@
+run_id,flow_type,source_archive,frame_pairs,evidence,status,source_implementation,ground_truth_available_in_upload,inputs_available_in_upload
+uniform_u8_vm20_run_55,uniform,synthetic_uniform_u8_vm20_run_55.7z,99,QC CSV + validation NPZ + plots,historical; full archive outside package,unverified legacy monolith,False,False
+rankine_R80_vb3_run_11,rankine,synthetic_rankine_R80_vb3_cx255p5_cy255p5_run_11.7z,99,QC CSV + validation NPZ + plots,historical; frame2_polynomial mode unsupported by latest,legacy variant implementing frame2_polynomial,False,False

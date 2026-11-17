@@ -1,0 +1,94 @@
+{
+  "paths": {
+    "input_images": "../data/examples/mini_uniform/frames",
+    "output_root": "../output"
+  },
+  "run": {
+    "runID": 1,
+    "UseParallelFlow": false,
+    "MaxFlowWorkers": 1,
+    "MaxFramePairs": 5
+  },
+  "preprocessing": {
+    "USE_SVD": false,
+    "KillIDs": []
+  },
+  "farneback": {
+    "PyramidDownsampleFactor": 0.5,
+    "PyramidLevels": 3,
+    "WindowSize": 15,
+    "IterationCount": 3,
+    "PolyFitKernelSize": 7,
+    "GaussKernelStdev": 1.2,
+    "FilterFlags": 0,
+    "FarnebackPyramidMinSize": 16,
+    "ExplicitFarnebackRegularization": 1e-06,
+    "ExplicitMaxResidualIncrement": 1.0,
+    "FarnebackWarpMode": "coefficients",
+    "CoefficientWarpOpenCVBorders": true
+  },
+  "information_solver": {
+    "UseInformationAwareSolver": true,
+    "InformationRidgeFraction": 0.5,
+    "UseInformationSpatialPrior": true,
+    "InformationPriorWindow": 5
+  },
+  "consistency": {
+    "ConsistencyErrorThreshold": 1.0,
+    "HardThresholdK": 6,
+    "RelativeConsistencyAlpha": 0.2,
+    "MedianOfMeansGroupSize": 10000
+  },
+  "confidence": {
+    "UseConfidenceSmoothing": false,
+    "ConfidenceSigma": 5,
+    "ConfidenceKernelSize": 5,
+    "MinConfidence": 0.05,
+    "UseLocalConfidenceSigma": false,
+    "LocalSigmaKernelSize": 81,
+    "MinimumConfidenceSigma": 0.001
+  },
+  "visualization": {
+    "PlotRejectedPoints": false,
+    "ArrowDensityStep": 4,
+    "ArrowScale": 50,
+    "VideoFPS": 15,
+    "VideoDPI": 90,
+    "VelocityInversion": 1
+  },
+  "diagnostics": {
+    "SaveDiagnosticMaps": false,
+    "SaveValidationData": true,
+    "SavePyramidVisualizations": false,
+    "PrintPyramidWindowResolution": false,
+    "SavePyramidVelocityPlots": false,
+    "ExportPyramidVelocityArrays": false,
+    "SaveStreamlinePlots": false,
+    "SaveStreamlineSVG": false,
+    "DiagnosticFramePairs": [
+      0
+    ],
+    "PyramidVelocityDPI": 180,
+    "PyramidQuiverVectorsAcross": 26,
+    "PyramidQuiverScale": 0.1,
+    "PyramidVelocityColorMax": null,
+    "StreamlineDensity": 1.15,
+    "StreamlineMinSpeed": 0.01,
+    "StreamlineMaxGridSize": 500,
+    "ShowDiagnosticPlots": false,
+    "PyramidVisualizationPairs": [
+      0
+    ],
+    "SavePyramidLevelImages": true,
+    "PyramidVisualizationDPI": 180,
+    "PyramidKnownU": null,
+    "PyramidKnownV": null,
+    "SaveInformationMaps": false
+  },
+  "outputs": {
+    "WriteWXF": false,
+    "OverwriteExistingRun": false,
+    "SaveVelocityVideo": false,
+    "SaveQCPlot": false
+  }
+}

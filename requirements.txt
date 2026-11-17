@@ -1,0 +1,10 @@
+numpy
+opencv-python
+scipy
+tifffile
+pandas
+matplotlib
+imageio
+tqdm
+# Optional: wolframclient  (required only for outputs.WriteWXF=true)
+# Optional: pytest  (to run the bundled smoke tests)
