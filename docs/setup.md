@@ -1,5 +1,18 @@
 # Setup and running the current code
 
+## Getting the repository
+
+Clone the repository and fetch the large files with Git LFS:
+
+```bash
+git clone https://github.com/pienins/Optical-flow-svd-and-fourier-filtering.git
+cd Optical-flow-svd-and-fourier-filtering
+git lfs install
+git lfs pull
+```
+
+Do not use GitHub's "Download ZIP". A ZIP download contains small Git LFS placeholder text files instead of the actual `.7z` archives.
+
 ## Requirements
 
 Python 3.10+ is a reasonable starting target, but no cross-platform supported-version matrix was supplied. Use the package versions tested in your own environment when publishing. The submitted `requirements.txt` lists: NumPy, OpenCV (`opencv-python`), SciPy, tifffile, pandas, Matplotlib, imageio and tqdm. `wolframclient` is optional only when `outputs.WriteWXF=false`; `pytest` is required for tests.
@@ -12,7 +25,9 @@ python -m pip install -r requirements-dev.txt
 python -m pytest -q
 ```
 
-**Observed here:** the seven supplied tests passed on the local environment. This is a smoke/regression check, not a published numerical verification across all settings.
+The 11 tests in `tests/` passed when last run (24 Nov 2026, Linux, Python 3). They are a smoke/regression check, including one small generate → pipeline → evaluate benchmark run, not a numerical verification across all settings.
+
+The Windows scripts `flowenv_setup.bat` and `setup_fieldenv.bat` create Conda environments. **`setup_fieldenv.bat` deletes any existing Conda environment named `fieldenv`**, so read it before running it.
 
 ## Input sequence
 
@@ -34,15 +49,7 @@ Set `outputs.WriteWXF=false` if Wolfram is not required; set `outputs.SaveVeloci
 
 `run.runID` and sequence name determine the output directory. Existing nonempty directories raise an error unless `outputs.OverwriteExistingRun=true`; overwriting **clears that run directory**. Always use a new run ID for archival research. The new refactor creates `run_manifest.json` and copies `parameters.json` to the run directory. Include a Git commit hash separately when publishing, as the current manifest does not record one.
 
-## Small, runnable example
-
-```bash
-python benchmarks/generators/generate_mini_uniform.py
-python run.py --config examples/mini_uniform_config.json
-python benchmarks/evaluators/evaluate_mini_uniform.py
-```
-
-Expect `output/mini_uniform_run_1/` with `pkl/`, `validation/`, `flow_qc_metrics.csv`, `parameters.json` and `run_manifest.json`. See [Examples](examples.md). To rerun, remove this **demonstration** output directory or choose another run ID; do not enable overwrite for historical results.
+A run directory contains `pkl/`, `validation/` (when `diagnostics.SaveValidationData=true`), `flow_qc_metrics.csv`, `parameters.json` and `run_manifest.json`; see [Output formats](output_formats.md).
 
 ## Troubleshooting
 

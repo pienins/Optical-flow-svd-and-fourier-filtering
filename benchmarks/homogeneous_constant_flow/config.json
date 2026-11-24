@@ -1,0 +1,21 @@
+{
+  "paths": {
+    "generated_root": "E:/Ansis Zivers/Optical Flow/Image_sequences/SYNTHETIC/Uniform_flow",
+    "pipeline_output_dir": "E:/Ansis Zivers/Optical Flow/Output_2WCF_SVD/SYNTHETIC/frames_run_1"
+  },
+  "generate": {
+    "width": 512,
+    "height": 512,
+    "n_frames": 100,
+    "target_visible_particles": 4000,
+    "true_u_px_per_frame": 1,
+    "true_v_px_per_frame": 0,
+    "particle_sigma_px": 1.1,
+    "particle_peak": 220.0,
+    "seed": 42,
+    "overwrite_existing": false
+  },
+  "evaluate": {
+    "interior_border_px": 24
+  }
+}

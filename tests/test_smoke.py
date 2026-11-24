@@ -59,6 +59,14 @@ def test_config_rejects_invalid_kernel(experiment):
         load_config(path)
 
 
+def test_config_rejects_duplicate_kill_ids(experiment):
+    cfg, path, _, _ = experiment
+    cfg['preprocessing']['KillIDs'] = [0, 3, 3]
+    path.write_text(json.dumps(cfg), encoding='utf-8')
+    with pytest.raises(ValueError, match='KillIDs'):
+        load_config(path)
+
+
 @pytest.mark.parametrize('mode', ['image', 'coefficients'])
 @pytest.mark.parametrize('information', [True, False])
 def test_solver_modes_return_valid_arrays(experiment, mode, information):

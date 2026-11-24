@@ -20,6 +20,22 @@
 
 All displacement components are in **pixels per frame pair**. A 2-D image does not independently determine the third component of a 3-D velocity field.
 
+## Sign convention and `VelocityInversion`
+
+The solver works in image coordinates: positive `u` points right, positive `v` points down, and the flow maps frame $t$ onto frame $t+1$. `visualization.VelocityInversion` multiplies the exported vectors by −1, 0 or +1 after the consistency selection. It does not change which vectors are retained.
+
+| Output | Affected by `VelocityInversion` |
+|---|---|
+| `pkl/`, `wxf/` retained vectors `u`, `v` | yes |
+| validation `u_output`, `v_output` | yes |
+| validation `u_raw`, `v_raw`, `u_processed`, `v_processed` | no |
+| velocity video, speed colour scale | arrow directions yes; speeds unchanged for ±1, all zero for 0 |
+| consistency error, masks, confidence, QC metrics | no |
+
+- **+1** (default): outputs stay in image coordinates. Use this for all ground-truth evaluation; the benchmark evaluators refuse other values.
+- **−1**: reverses every vector. A reversed forward vector is not the backward flow, which is estimated at the displaced position. If you only need upward-positive $v$, flip $v$ in post-processing instead, because −1 also reverses $u$.
+- **0**: sets every exported vector to zero while still recording which positions were retained. This is rarely useful; check the value before running.
+
 ### Note on the uploaded archives
 
 Archived `parameters.json` files are **flat**, unlike the grouped config written by the new refactor. They do not contain the modular `run_manifest.json` and must be interpreted with their original code version. The Rankine archive additionally records a warp mode unsupported in this refactor.

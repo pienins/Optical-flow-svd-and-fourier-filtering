@@ -4,16 +4,36 @@
 
 Optical flow is a finite **inter-frame displacement**, not necessarily the instantaneous Eulerian velocity at the first frame. In a synthetic test, ground truth should use the same temporal correspondence and sampling locations as the estimator. With image coordinates $x$ right and $y$ down, the measured displacement is $\mathbf d=(u,v)$ in `px/frame pair` (typically written `px/frame` for consecutive frames). To convert to `mm/s`, multiply by `pixel_size_mm / frame_interval_s`.
 
-## Submitted uniform generator
+## Layout
 
-The original `benchmarks/generators/generate_uniform_flow_test.py` creates 512×512 images, 100 frames, ~4000 visible tracer particles, Gaussian particle width 1.1 px, approximate peak 220 and random seed 42 **in its submitted default configuration**. The file currently sets `(TRUE_U, TRUE_V)=(1,0)` px/frame; do **not** mistake this for the separately submitted historical `(8,-20)` run. Every particle center evolves as
+Benchmarks are organized by flow scenario. Each scenario folder holds its source and configuration; generated images and evaluation results are written to the locations set in its `config.json` (relative paths are resolved against that file).
+
+```text
+benchmarks/
+├── common/metrics.py               shared metric definitions (EPE, angular error, safe statistics)
+├── homogeneous_constant_flow/      generate.py, evaluate.py, config.json
+└── evaluators/                     Rankine evaluator, not yet migrated (generator missing)
+```
+
+`motionless/`, `shear_flow/`, `rankine_vortex/` and `gaussian_blob/` will be added when their scripts are available.
+
+## Homogeneous constant flow (`benchmarks/homogeneous_constant_flow/`)
+
+```bash
+python benchmarks/homogeneous_constant_flow/generate.py        # writes frames + ground truth
+python run.py --config /path/to/pipeline_config.json           # with diagnostics.SaveValidationData = true
+python benchmarks/homogeneous_constant_flow/evaluate.py        # after setting paths.pipeline_output_dir
+```
+
+Both scripts read the same `config.json` (or `--config PATH`). Its default settings are 512×512 images, 100 frames, ~4000 visible tracer particles, Gaussian particle width 1.1 px, approximate peak 220, random seed 42 and `(u, v) = (1, 0)` px/frame. Do **not** mistake this for the historical `(8, −20)` run. Every particle center evolves as
 
 $$x_i(t)=x_i(0)+t u_0,\qquad y_i(t)=y_i(0)+t v_0.$$
 
-Subpixel positions are bilinearly splatted onto four pixels, Gaussian blurred, fixed-intensity scaled, clipped to 8-bit, and saved as TIFF. Particles are initially seeded beyond the image extent to support entries/exits. The generator writes `true_vector_values.npz` (arrays `u_gt`, `v_gt`, and scalars `true_u`, `true_v`, `true_speed`) plus `parameters.json`. Its final console message currently **incorrectly says `ground_truth.npz`**—the actual saved file name is correct. The original generator also uses a hard-coded local Windows output directory; edit it before running.
+Subpixel positions are bilinearly splatted onto four pixels, Gaussian blurred, fixed-intensity scaled, clipped to 8-bit, and saved as TIFF. Particles are initially seeded beyond the image extent to support entries/exits. Output goes to `<generated_root>/synthetic_uniform_u<u>_v<v>/`, with decimal points written as `p` and minus signs as `m` (e.g. `synthetic_uniform_u8_vm20`, matching the historical archive name). That folder contains `frames/`, `true_vector_values.npz` (arrays `u_gt`, `v_gt`; scalars `true_u`, `true_v`, `true_speed`) and `parameters.json`. The generator refuses to write into a folder that already contains frames unless `generate.overwrite_existing = true`, so frames from an earlier, longer sequence cannot be silently mixed in.
 
-The new `generate_mini_uniform.py` is only a **small, portable demonstrator** that uses the same particle-rendering concepts and writes compatible ground truth. It does not recreate the historical archived uniform data.
+The evaluator derives the ground-truth folder from the same flow parameters, so only `paths.pipeline_output_dir` must be set to the run directory produced by `run.py`. It writes `uniform_validation_per_frame.csv`, `uniform_validation_summary.txt` and four plots to `<pipeline_output_dir>/synthetic_validation_results/`. It refuses runs recorded with `VelocityInversion ≠ 1`, because their `u_output`/`v_output` are no longer in image coordinates.
 
+These scripts were migrated from the originals (still preserved in `Generation_testing_unfirom_flow/`). With identical settings, the migrated generator produced byte-identical frames, ground truth and `parameters.json`, and the migrated evaluator produced identical CSV, summary and plots on the same pipeline run (checked 24 Nov 2026). `tests/test_benchmarks.py` runs generate → pipeline → evaluate on a small sequence.
 ## Rankine vortex benchmark
 
 A Rankine vortex has piecewise tangential speed
@@ -29,7 +49,7 @@ The supplied Rankine validator expects `true_vector_values.npz` keys `u_gt`, `v_
 
 ## Validation tools (as supplied)
 
-The `benchmarks/evaluators/` scripts read `validation_*.npz`, access ground truth at sampled `x`,`y`, and report per-pair / summary metrics. Both scripts default to a 24-pixel interior exclusion. The Rankine script additionally uses a minimum true speed of 0.25 px/frame for angular/relative error, 14 radial bins, radial/tangential bias, center error and a binned core-radius proxy. **Update `SYNTHETIC_TEST_DIR` and `PIPELINE_OUTPUT_DIR`** in each original evaluator before use; they are hard-coded to local Windows directories.
+Both evaluators read `validation_*.npz`, look up ground truth at the sampled `x`, `y`, and report per-pair and summary metrics, with a 24-pixel interior exclusion by default. The Rankine evaluator (`benchmarks/evaluators/evaluate_2wcf_rankine_test.py`) additionally uses a minimum true speed of 0.25 px/frame for angular/relative error, 14 radial bins, radial/tangential bias, center error and a binned core-radius proxy. It has not been migrated yet: **edit `SYNTHETIC_TEST_DIR` and `PIPELINE_OUTPUT_DIR`** in the script before use, and it still contains its own copies of the metric functions.
 
 ### Metrics
 

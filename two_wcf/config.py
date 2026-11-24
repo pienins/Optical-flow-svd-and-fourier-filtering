@@ -150,5 +150,9 @@ def validate(p: Mapping[str, Any]) -> None:
     for key in ('DiagnosticFramePairs', 'PyramidVisualizationPairs', 'KillIDs'):
         if not isinstance(p[key],list) or not all(isinstance(v,int) and v>=0 for v in p[key]):
             raise ValueError(f'{key} must be an array of non-negative integers.')
+    # A repeated SVD mode index would subtract that mode more than once.
+    duplicates = sorted({v for v in p['KillIDs'] if p['KillIDs'].count(v) > 1})
+    if duplicates:
+        raise ValueError(f'KillIDs contains repeated mode indices: {duplicates}')
     if not isinstance(p['WriteWXF'],bool):
         raise ValueError('WriteWXF must be a JSON boolean.')

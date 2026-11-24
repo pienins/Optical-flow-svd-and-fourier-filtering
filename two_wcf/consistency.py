@@ -289,8 +289,11 @@ def compute_flow_pair(index: int, images, h: int, w: int, global_min, global_max
         thr_frame = med + cfg.HardThresholdK * mad
         sigma_frame = med + cfg.ConfidenceSigma * mad
     else:
+        # Reached only when no pixel has a finite consistency error. Every
+        # vector is then rejected by the mask below, so these values only
+        # affect the recorded QC scalars. Both come from the configuration.
         thr_frame = cfg.ConsistencyErrorThreshold
-        sigma_frame = 1.0
+        sigma_frame = cfg.MinimumConfidenceSigma
 
     if not np.isfinite(thr_frame):
         thr_frame = cfg.ConsistencyErrorThreshold
