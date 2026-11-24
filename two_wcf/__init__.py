@@ -1,1 +1,1 @@
-"""Refactored two-way consistent explicit Farnebäck optical-flow pipeline."""
+"""Two-way consistent explicit Farnebäck optical-flow pipeline."""

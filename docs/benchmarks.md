@@ -34,6 +34,7 @@ Subpixel positions are bilinearly splatted onto four pixels, Gaussian blurred, f
 The evaluator derives the ground-truth folder from the same flow parameters, so only `paths.pipeline_output_dir` must be set to the run directory produced by `run.py`. It writes `uniform_validation_per_frame.csv`, `uniform_validation_summary.txt` and four plots to `<pipeline_output_dir>/synthetic_validation_results/`. It refuses runs recorded with `VelocityInversion ≠ 1`, because their `u_output`/`v_output` are no longer in image coordinates.
 
 These scripts were migrated from the originals (still preserved in `Generation_testing_unfirom_flow/`). With identical settings, the migrated generator produced byte-identical frames, ground truth and `parameters.json`, and the migrated evaluator produced identical CSV, summary and plots on the same pipeline run (checked 24 Nov 2026). `tests/test_benchmarks.py` runs generate → pipeline → evaluate on a small sequence.
+
 ## Rankine vortex benchmark
 
 A Rankine vortex has piecewise tangential speed
@@ -43,11 +44,11 @@ v_{\theta}(r)=\begin{cases}\Omega r,& r\le R,\\ \Omega R^2/r,&r>R,\end{cases}
 \qquad \Omega=V_R/R,
 $$
 
-with $r=\sqrt{(x-c_x)^2+(y-c_y)^2}$. A tracer orbit has angular increment $\Delta\theta=\Omega\Delta t$ inside the core and $\Delta\theta=\Omega R^2\Delta t/r^2$ outside. For an exact finite-displacement benchmark, rotate the initial point by $\Delta\theta$, then define **ground truth as the final minus initial Cartesian position** (the chord), not the local tangent multiplied by $\Delta t$. This is particularly important at large angular displacements. These equations describe a suitable Rankine benchmark; **the actual Rankine generator was not provided**, so its implementation-specific details are not yet verified.
+with $r=\sqrt{(x-c_x)^2+(y-c_y)^2}$. A tracer orbit has angular increment $\Delta\theta=\Omega\Delta t$ inside the core and $\Delta\theta=\Omega R^2\Delta t/r^2$ outside. For an exact finite-displacement benchmark, rotate the initial point by $\Delta\theta$, then define **ground truth as the final minus initial Cartesian position** (the chord), not the local tangent multiplied by $\Delta t$. This is particularly important at large angular displacements. These equations describe a suitable Rankine benchmark; **the Rankine generator used for the archived run is not in this repository**, so its implementation-specific details are not yet verified.
 
-The supplied Rankine validator expects `true_vector_values.npz` keys `u_gt`, `v_gt`, `speed_gt`, `radius_gt`, `radial_gt`, `tangential_gt`, `continuous_tangential_speed_gt`, `continuous_vorticity_gt`, `continuous_divergence_gt`, `center_x`, `center_y`, `core_radius_px`, `boundary_tangential_speed_px`, `omega_core_rad_per_frame`. The historical run's name indicates `R80`, `vb3`, and `(cx,cy)=(255.5,255.5)`; **filenames alone are not adequate proof of the generating parameter values**.
+The Rankine evaluator expects `true_vector_values.npz` keys `u_gt`, `v_gt`, `speed_gt`, `radius_gt`, `radial_gt`, `tangential_gt`, `continuous_tangential_speed_gt`, `continuous_vorticity_gt`, `continuous_divergence_gt`, `center_x`, `center_y`, `core_radius_px`, `boundary_tangential_speed_px`, `omega_core_rad_per_frame`. The historical run's name indicates `R80`, `vb3`, and `(cx,cy)=(255.5,255.5)`; **filenames alone are not adequate proof of the generating parameter values**.
 
-## Validation tools (as supplied)
+## Evaluators
 
 Both evaluators read `validation_*.npz`, look up ground truth at the sampled `x`, `y`, and report per-pair and summary metrics, with a 24-pixel interior exclusion by default. The Rankine evaluator (`benchmarks/evaluators/evaluate_2wcf_rankine_test.py`) additionally uses a minimum true speed of 0.25 px/frame for angular/relative error, 14 radial bins, radial/tangential bias, center error and a binned core-radius proxy. It has not been migrated yet: **edit `SYNTHETIC_TEST_DIR` and `PIPELINE_OUTPUT_DIR`** in the script before use, and it still contains its own copies of the metric functions.
 

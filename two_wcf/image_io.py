@@ -3,19 +3,17 @@ from __future__ import annotations
 import os
 import re
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.fft import fft, fftfreq
 from tifffile import imread
 from tqdm import tqdm
 
 
 def numeric_sort_key(filename: str) -> int:
-    """Extract first integer from filename for natural sorting."""
+    """Sort key: the first integer in the filename (not a full natural sort)."""
     match = re.search(r"\d+", filename)
     return int(match.group()) if match else -1
 
 
-def svd_filter_images(image_folder: str, remove_modes, do_plots: bool = True):
+def svd_filter_images(image_folder: str, remove_modes):
     """
     Load a stack of TIFF images, perform temporal SVD across frames,
     remove selected temporal modes and return the filtered volume.
@@ -41,39 +39,6 @@ def svd_filter_images(image_folder: str, remove_modes, do_plots: bool = True):
     print("\n[ SVD ] Performing SVD...")
     X = volume.reshape(T, -1)  # shape: (T, Npix)
     U, S, Vt = np.linalg.svd(X, full_matrices=False)
-
-    if do_plots:
-        # Temporal modes (first few)
-        plt.figure(figsize=(8, 3))
-        for i in range(min(3, U.shape[1])):
-            plt.plot(U[:, i], label=f"Mode {i}")
-        plt.title("Temporal SVD Modes")
-        plt.xlabel("Frame")
-        plt.legend()
-        plt.tight_layout()
-        plt.show()
-
-        # Frequency analysis for the first few modes
-        num_modes_to_plot = min(10, U.shape[1])
-        fig, axs = plt.subplots(
-            num_modes_to_plot, 1,
-            figsize=(10, 2 * num_modes_to_plot),
-            sharex=True
-        )
-        fig.suptitle("FFT of Temporal SVD Modes")
-
-        for i in range(num_modes_to_plot):
-            signal = U[:, i]
-            N = len(signal)
-            yf = np.abs(fft(signal - np.mean(signal)))
-            xf = fftfreq(N, d=1)[:N // 2]
-            axs[i].plot(xf, yf[:N // 2])
-            axs[i].set_ylabel(f"Mode {i}")
-            axs[i].grid(True)
-
-        axs[-1].set_xlabel("Frequency (1/frame)")
-        plt.tight_layout(rect=[0, 0, 1, 0.97])
-        plt.show()
 
     # Remove selected modes
     print("\n[ SVD ] Removing selected modes:", remove_modes)

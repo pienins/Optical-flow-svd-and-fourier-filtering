@@ -36,6 +36,4 @@
 7. For each pair in `DiagnosticFramePairs`, run the forward solver again, sequentially, to capture per-level flow and information-matrix diagnostics (`diagnostics.save_explicit_flow_diagnostics`). This repeats work already done in step 4 but keeps the main loop free of per-level bookkeeping.
 8. Write `run_manifest.json`.
 
-## Code provenance
-
-The modular implementation was uploaded as `2WCF_explicit_refactored(1).zip`. This distribution retains the refactor's source, sample config, and tests, rather than silently merging missing historical `frame2_polynomial` options from the archived Rankine run. See [Status and limitations](status_and_limitations.md) for what is and is not implemented.
+See [Status and limitations](status_and_limitations.md) for what is and is not implemented.

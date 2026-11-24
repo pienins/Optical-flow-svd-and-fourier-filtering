@@ -36,7 +36,7 @@ $$
 
 `KillIDs` are zero-based. Indices outside $[0,\operatorname{rank}-1]$ are skipped with a warning. Repeated indices are rejected when the configuration is loaded, because a repeated mode would be subtracted more than once.
 
-**Mode selection is not part of the pipeline.** `KillIDs` are supplied in the configuration. Frequency analysis of temporal modes is done separately in `Artifact_mode_detection/`. The pipeline calls the SVD routine with plotting disabled, so the in-function FFT plots of $\mathbf u_k$ are never produced during a normal run. **No Fourier-domain filtering is applied to the images**, despite the repository's historical name.
+**Mode selection is not part of the pipeline.** `KillIDs` are set in the configuration. Frequency analysis of temporal modes is done separately in `Artifact_mode_detection/`. **No Fourier-domain filtering is applied to the images**, despite the repository's historical name.
 
 ### 1.2 Sequence-global normalization and quantization
 

@@ -1,5 +1,5 @@
-# Full historical archives (to be added separately)
+# Full historical archives
 
-Place the original `.7z` result files here and track through Git LFS. Use `../archive_checksums.json` to check byte-for-byte integrity. The package intentionally does not duplicate these large user-provided files.
+The two original 99-pair `.7z` result archives belong in this folder, tracked with Git LFS (the existing `*.7z` rule). They are not added yet. Check each file against `../archive_checksums.json` before adding it ([results registry](../../docs/history/results_registry.md)).
 
-These two archives are **output archives**, not complete reproduction bundles: they do not include original input TIFF sequences or `true_vector_values.npz` ground truth files.
+These are **output archives**, not complete reproduction bundles: they do not include the original input TIFF sequences or the `true_vector_values.npz` ground-truth files.

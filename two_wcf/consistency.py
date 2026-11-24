@@ -525,7 +525,7 @@ def compute_flow_pair(index: int, images, h: int, w: int, global_min, global_max
         "validation_confidence": conf_sampled.astype(np.float32, copy=True),
     }
 
-    # Full-resolution maps are returned only when the user asked to save them.
+    # Full-resolution maps are returned only when diagnostics.SaveDiagnosticMaps is true.
     if cfg.SaveDiagnosticMaps:
         result["local_mad_map"] = local_mad_map.astype(np.float32, copy=False)
         result["local_sigma_map"] = local_sigma_map.astype(np.float32, copy=False)

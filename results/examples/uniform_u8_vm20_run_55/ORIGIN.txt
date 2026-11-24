@@ -1,1 +1,1 @@
-Extracted illustrative subset of user-supplied synthetic_uniform_u8_vm20_run_55.7z; not recomputed with the refactored solver. Original complete archive is NOT bundled in this starter.
+Illustrative subset extracted from synthetic_uniform_u8_vm20_run_55.7z; not recomputed with the current solver. The complete archive is not yet in this repository (see results/archives/README.md).

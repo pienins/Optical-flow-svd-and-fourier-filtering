@@ -2,7 +2,7 @@
 
 *Historical record; reviewed 24 November 2026.*
 
-`results/index.csv` lists run labels, result-evidence classes, missing inputs and scientific status. `results/archive_checksums.json` records the SHA-256 and byte size of the two original 99-pair `.7z` output archives, so that copies can be verified byte for byte.
+`results/index.csv` lists run labels, result-evidence classes, missing inputs and scientific status. `results/archive_checksums.json` records the SHA-256 and byte size of the two original 99-pair `.7z` output archives, so that copies can be verified byte for byte. `results/archived_qc_summary.json` holds the QC summary of both runs (median retention, forward–backward residual, first-pair median `u`, `v`), which is the source of the numbers quoted in [examples](examples.md).
 
 ## The two 99-pair archives
 

@@ -10,7 +10,7 @@
 | `OFV_field_postprocessing_v2.nb` | Mathematica field post-processing | Kept in place |
 | `experimental_data/sequences/` | Four `.7z` experimental image sequences | Git LFS; moved from `Test_image_sequences/` on 24 Nov 2026 |
 | `experimental_data/outputs/` | Six `.7z` outputs computed from three of those sequences | Git LFS; moved from `Example_2WCF-SVD_outputs/` on 24 Nov 2026 |
-| `flowenv_setup.bat`, `setup_fieldenv.bat` and matching `.txt` | Windows Conda environment helpers | **`setup_fieldenv.bat` deletes any existing Conda environment named `fieldenv`** before creating it |
+| `flowenv_setup.bat`, `setup_fieldenv.bat` | Windows Conda environment helpers: `flowenv` runs this pipeline ([setup](../setup.md)); `fieldenv` is for a separate field post-processing script not in this repository | **`setup_fieldenv.bat` deletes any existing Conda environment named `fieldenv`** before creating it |
 | `.gitattributes` | Git LFS rule | Tracks `*.7z` only |
 
 A GitHub "Download ZIP" cannot recover the LFS archives: it contains ~130-byte pointer files instead. Clone with Git LFS and run `git lfs pull` ([setup](../setup.md)).

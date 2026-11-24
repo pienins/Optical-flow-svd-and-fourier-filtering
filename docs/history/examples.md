@@ -2,7 +2,7 @@
 
 *Historical record. Describes two archived 99-pair synthetic runs made with earlier solver versions; reviewed 24 November 2026. For the current method see [`methods.md`](../methods.md).*
 
-The figures below are **original outputs extracted from the user-supplied benchmark archives**, or plots reconstructed from their `flow_qc_metrics.csv`; no new ground-truth analysis is implied.
+The figures below are **original outputs extracted from the two benchmark archives**, or plots reconstructed from their `flow_qc_metrics.csv`; no new ground-truth analysis is implied.
 
 ## Historical uniform translation — `synthetic_uniform_u8_vm20_run_55`
 
@@ -40,4 +40,4 @@ The curves are from **different flows with different sampling grids and solver m
 
 ## Missing pieces for exact historical reproduction
 
-For either historical case, supply the **original input TIFF sequence**, its **ground-truth NPZ**, and the **exact source revision**. For the Rankine case, also supply the historical solver implementing `frame2_polynomial`, plus its matching Rankine generator. The two `.7z` archives are preserved separately, not rewritten as new modular results.
+Exact reproduction of either case needs the **original input TIFF sequence**, its **ground-truth NPZ** and the **exact source revision**. The Rankine case also needs the historical solver implementing `frame2_polynomial`, plus its matching Rankine generator. The two `.7z` archives are preserved separately, not rewritten as new modular results.

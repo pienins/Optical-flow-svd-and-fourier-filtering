@@ -76,7 +76,7 @@ Unknown here means "not among the inspected files", not "does not exist".
 | Run manifest and overwrite protection | Implemented | `two_wcf/pipeline.py`, `two_wcf/outputs.py` |
 | Uniform-flow benchmark (generate, evaluate) | Implemented, config-driven | `benchmarks/homogeneous_constant_flow/`; end-to-end test in `tests/test_benchmarks.py` |
 | Rankine benchmark | Evaluator only; generator missing | `benchmarks/evaluators/` |
-| Motionless, shear-flow and Gaussian-blob benchmarks | Not yet implemented | scripts to be supplied |
+| Motionless, shear-flow and Gaussian-blob benchmarks | Not yet implemented | scripts not yet in the repository |
 | Historical uniform and Rankine 99-pair outputs | Excerpts only | `results/examples/`; full archives not yet added (§5) |
-| Inputs and ground truth of the archived runs | Not supplied | §4 |
-| Parameter-sweep / PSO archive | Not supplied | §5 |
+| Inputs and ground truth of the archived runs | Not in the repository | §4 |
+| Parameter-sweep / PSO archive | Not in the repository | §5 |

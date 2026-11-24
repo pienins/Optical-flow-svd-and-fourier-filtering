@@ -111,7 +111,7 @@ def run(cfg):
     print(f'Information-aware solver: {cfg.UseInformationAwareSolver}')
     print('====================================')
     if cfg.USE_SVD:
-        volume,filenames=svd_filter_images(str(cfg.input_images),cfg.KillIDs,do_plots=False)
+        volume,filenames=svd_filter_images(str(cfg.input_images),cfg.KillIDs)
         images=[volume[i] for i in range(volume.shape[0])]
     else:
         images,filenames=load_images_without_svd(str(cfg.input_images))
