@@ -15,7 +15,7 @@
 
 ## Scientific scope
 
-The current pipeline takes a grayscale TIFF image sequence and estimates 2-D inter-frame displacement using explicit, local-quadratic Farnebäck-type optical flow at multiple pyramid levels. It computes both forward and backward fields, applies robust bidirectional-consistency rejection, and can optionally apply temporal SVD preprocessing, confidence-weighted smoothing, and information-aware regularization. This explicit solver **does not claim numerical identity to OpenCV Farnebäck**. The current code has optional FFT plots of SVD temporal modes; a separate image-frequency Fourier filter has **not** been verified in the current modular pipeline.
+The current pipeline takes a grayscale TIFF image sequence and estimates 2-D inter-frame displacement using explicit, local-quadratic Farnebäck-type optical flow at multiple pyramid levels. It computes both forward and backward fields, applies robust bidirectional-consistency rejection, and can optionally apply temporal SVD preprocessing, confidence-weighted smoothing, and information-aware regularization. This explicit solver **does not claim numerical identity to OpenCV Farnebäck**. The current code has optional FFT plots of SVD temporal modes.
 
 **Units:** Flow components are image displacements (pixels/frame pair). For physical velocity, apply known spatial and temporal calibration. Image coordinates are +u right, +v down.
 
